@@ -30,7 +30,7 @@ wind = 5.0
 
 
 raindrops = []
-
+raindrop_effect_particles = []
 
 
 while True:
@@ -42,18 +42,17 @@ while True:
     if is_raining:
         raindrops.append(Raindrop(WIDTH, wind, raindropImage))
 
-    raindrops = [rain for rain in raindrops if rain.y < HEIGHT]
     for rain in raindrops:
-        rain.draw(screen)
-        rain.fall()
+            rain.draw(screen)
+            rain.fall(screen, raindrop_effect_particles)
+
+    for particle in raindrop_effect_particles:
+        particle.update()
+        particle.draw(screen)
+
+    raindrops = [rain for rain in raindrops if rain.y < HEIGHT]
+    raindrop_effect_particles = [p for p in raindrop_effect_particles if p.timer > 0]
+
 
     pygame.display.flip()
     clock.tick(30)
-# 3. Game loop
-# while running:
-    # Hvis API'et siger det regner, spawn nye dråber
-    # if is_raining:
-    #     raindrops.append(Raindrop(screen_width, wind))
-    
-    # Opdater alle dråber og tegn dem
-    # Fjern dråber der rammer bunden af skærmen (så de ikke bruger hukommelse)
