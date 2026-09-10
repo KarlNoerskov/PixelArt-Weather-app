@@ -1,10 +1,10 @@
 import pygame
+import datetime
 
-from rendering.raindrop import Raindrop
 from weather_data.weather_data_api import WeatherData
+from rendering.renderer import Renderer
 
-BLUE = (135, 206, 235)
-WHITE = (255, 255, 255)
+
 WIDTH = 800
 HEIGHT = 800
 
@@ -13,46 +13,37 @@ pygame.display.set_caption("PixelArt Weather Simulator")
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 
-# 1. Hent vejrdata én gang
 weather_man = WeatherData()
-weather_data = weather_man.get_weather_data()
-#wind = weather_data['wind_speed_10m']
-#is_raining = weather_data['precipitation'] > 0
+current_data, daily_data = weather_man.get_weather_data()
+#time_of_day = datetime.datetime.now()
 
-raindropPic = pygame.image.load('assets/rain.png')
-raindropImage = pygame.transform.smoothscale(raindropPic,(50,60))
-raindropRect = raindropImage.get_rect()
+is_raining = current_data['precipitation'] > 0.0
+rainToday = current_data['precipitation'] 
+wind = current_data['wind_speed_10m'] / 3.6
+cloudy = current_data['cloud_cover']
 
+#cloudy = weather_data['cloud_cover']
+#sunrise_time = daily_data['sunrise'][0].split('T')[1]
+#sunset_time = daily_data['sunset'][0].split('T')[1]
 
-#fake data
-is_raining = True
-wind = 5.0
+# Fake data
+#is_raining = True
+#rainToday = 10 #mm
+#wind = 6 #m/s
+#cloudy = 50
+sunrise_time = "06:00"
+sunset_time = "20:00"
+time = datetime.datetime(2026, 9, 11, 20, 30)
 
-
-raindrops = []
-raindrop_effect_particles = []
-
+renderer = Renderer(WIDTH, HEIGHT, rainToday, wind, cloudy, is_raining, sunrise_time, sunset_time, time)
 
 while True:
-    screen.fill(BLUE)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-    if is_raining:
-        raindrops.append(Raindrop(WIDTH, wind, raindropImage))
-
-    for rain in raindrops:
-            rain.draw(screen)
-            rain.fall(screen, raindrop_effect_particles)
-
-    for particle in raindrop_effect_particles:
-        particle.update()
-        particle.draw(screen)
-
-    raindrops = [rain for rain in raindrops if rain.y < HEIGHT]
-    raindrop_effect_particles = [p for p in raindrop_effect_particles if p.timer > 0]
-
+    
+    renderer.update(screen)
 
     pygame.display.flip()
     clock.tick(30)
