@@ -7,6 +7,7 @@ from rendering.tree import Tree
 from rendering.wind import Wind
 from rendering.cloud import Cloud
 from rendering.sun import Sun
+from rendering.star import Star
 from rendering.asset_manager import AssetManager
 
 class Renderer:
@@ -70,10 +71,20 @@ class Renderer:
         self.raindrops = []
         self.raindrop_effect_particles = []
 
+        if self.night:
+            self.stars_amount = 30
+            self.stars = [Star(random.randrange(0, self.WIDTH), random.randrange(0, self.HEIGHT // 2), self.asset_manager.get_star()) for _ in range(self.stars_amount)]
+
+
     def update(self, screen):
         screen.fill(self.screen_color)
         if not self.night:
             self.sun.update(screen)
+
+
+        for star in self.stars:
+                    star.update(screen)
+
 
         if self.is_raining:
             for rain in range(self.rainToday * 2):
@@ -92,8 +103,10 @@ class Renderer:
             particle.update()
             particle.draw(screen)
 
-        for cloud in self.clouds:
-            cloud.update(screen)
+        if self.night:
+            for cloud in self.clouds:
+                cloud.update(screen)
+
 
         self.raindrops = [rain for rain in self.raindrops if rain.y < self.HEIGHT]
         self.raindrop_effect_particles = [p for p in self.raindrop_effect_particles if p.timer > 0]

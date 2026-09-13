@@ -6,8 +6,10 @@ class AssetManager:
     def __init__(self):
         self.file_dictionary = {}
         self.cloud_dictionary = {}
+        self.stars_dictionary = {}
         self.fillDict("assets", self.file_dictionary)
         self.fillDict("assets/Clouds", self.cloud_dictionary)
+        self.fillDict("assets/stars", self.stars_dictionary)
 
     def file_names(self, path):
         return os.listdir(path)
@@ -25,3 +27,6 @@ class AssetManager:
 
     def get_cloud(self):
         return random.choice(list(self.cloud_dictionary.values()))
+
+    def get_star(self):
+        return random.choice(list(self.stars_dictionary.values()))
