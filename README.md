@@ -2,18 +2,8 @@
 
 An interactive weather simulator built with Python and Pygame that translates live meteorological REST API data into real-time procedural pixel art animations and particle systems.
 
-<img width="800" height="450" alt="pixelartSunGIF" src="[https://github.com/user-attachments/assets/bef68bfe-2caa-427a-9c23-5c30f38d4bc8](https://github.com/user-attachments/assets/bef68bfe-2caa-427a-9c23-5c30f38d4bc8)" />
+<img width="800" height="450" alt="pixelartSunGIF" src="https://github.com/user-attachments/assets/bf5faeda-aecb-4f9f-9ac8-0e4218afde57" />
 
----
-
-## Overview
-
-This project bridges external API consumption with a custom rendering engine built from scratch in Pygame. The primary objective was to build a dynamic weather visualizer driven by real-world data points—such as wind speed, precipitation, cloud density, and daylight cycles—calculated mathematically and animated in a real-time gameloop.
-
-### Tech Stack
-* **Language:** Python 3
-* **Graphics & Gameloop:** Pygame
-* **Networking & Data:** Requests (Open-Meteo REST API)
 
 ---
 
@@ -24,14 +14,14 @@ Developing this application provided hands-on experience in decoupling network I
 ### 1. API Ingestion & Data Transformation
 * **REST Consumption:** Querying the Open-Meteo API to extract localized weather metrics, including temperature, precipitation volume, wind speed, cloud cover, and daily sunrise/sunset timings.
 * **Time Serialization:** Parsing ISO-8601 timestamps into relative minute offsets from midnight. This enables direct mathematical comparisons with the local system clock to determine daylight bounds.
-* **Unit Standardization:** Normalizing meteorological units (e.g., converting wind speed from $\text{km/h}$ to $\text{m/s}$) to serve as baseline scalar constants for physics calculations.
+* **Unit Standardization:** Normalizing meteorological units (e.g., converting wind speed from km/h to m/s) to serve as baseline scalar constants for physics calculations.
 
 ### 2. Real-Time Animation & Particle Systems
-* **Trigonometric Sun Trajectory:** Calculating the arc of the sun using a sinusoidal curve parameterized by the normalized elapsed daytime between sunrise and sunset:
-  $$y = \text{horizon} - \left(\sin\left(\frac{t - t_{\text{sunrise}}}{t_{\text{sunset}} - t_{\text{sunrise}}} \cdot \pi\right) \cdot \text{arc\_height}\right)$$
-* **Vectorized Rain & Particle Splashes:** Raindrops update based on vertical gravity and horizontal wind forces. The raindrop sprite is dynamically rotated using its motion vector angle:
-  $$\theta = \arctan2(v_x, v_y)$$
-  Upon collision with the ground boundary ($y \ge \text{HEIGHT}$), a localized particle system is triggered with randomized trajectories and decaying lifespans to simulate splash physics.
+* **Trigonometric Sun Trajectory:** Calculating the arc of the sun using a sinusoidal curve parameterized by the normalized elapsed daytime between sunrise and sunset.
+
+  $$y = \text{horizon} - \left(\sin\left(\frac{t - t_{sunrise}}{t_{sunset} - t_{sunrise}} \cdot \pi\right) \cdot \text{arc height}\right)$$
+
+* **Vectorized Rain & Particle Splashes:** Raindrops update based on vertical gravity and horizontal wind forces. The raindrop sprite is dynamically rotated using its motion vector angle. Upon collision with the ground boundary, a localized particle system is triggered with randomized trajectories and decaying lifespans to simulate splash physics.
 * **Wind-Driven Sprite Animation:** Procedural tree swaying that dynamically changes state (idle, light wind, storm). Animation delay thresholds scale inversely with wind intensity, producing realistic cadence.
 
 ### 3. Resource Management & Performance
@@ -44,7 +34,8 @@ Developing this application provided hands-on experience in decoupling network I
 
 The environment dynamically transitions to night mode based on sunset calculations. The day sky shifts to a night palette, and procedural star fields are scattered across the upper atmosphere:
 
-<img width="800" height="450" alt="pixelartNightGIF" src="[https://github.com/user-attachments/assets/87f30e6c-ea08-401f-929e-21580f5ce4b1](https://github.com/user-attachments/assets/87f30e6c-ea08-401f-929e-21580f5ce4b1)" />
+<img width="800" height="450" alt="pixelartNightGIF" src="https://github.com/user-attachments/assets/3ade97f6-f2a3-4b4c-a23c-ecc3441ceee5" />
+
 
 ---
 
@@ -103,3 +94,5 @@ pip install -r requirements.txt
 ```bash
 python main.py
 ```
+
+Author Karl Nørskov
