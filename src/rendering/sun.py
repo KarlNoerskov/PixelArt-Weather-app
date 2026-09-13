@@ -6,12 +6,12 @@ class Sun:
     def __init__(self, Sunrisetime, Sunsettime, Time, WIDTH, HEIGHT):
         self.sunrise_time = Sunrisetime
         self.sunset_time = Sunsettime
-        self.sun_positions = 5
+        self.sun_positions = 20
         self.radius = 100
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
         self.horizon = HEIGHT/2
-        self.arc_height = 400
+        self.arc_height = 600
 
         self.time_of_day = Time
 
@@ -27,7 +27,7 @@ class Sun:
 
     def draw(self, surface):
         if self.sun_position <= self.sun_positions and self.sun_position >= 1 : #draw sun in pos
-            x = self.WIDTH // self.sun_positions * self.sun_position - 1
+            x = self.WIDTH - (self.WIDTH // self.sun_positions * self.sun_position - 1)
             y = self.horizon - (math.sin(self.sun_position / (self.sun_positions - 1) * math.pi) * self.arc_height)
             pygame.draw.circle(surface, (255, 223, 34), (x,y), self.radius)
 
