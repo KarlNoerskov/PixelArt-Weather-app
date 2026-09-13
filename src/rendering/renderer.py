@@ -7,6 +7,7 @@ from rendering.tree import Tree
 from rendering.wind import Wind
 from rendering.cloud import Cloud
 from rendering.sun import Sun
+from rendering.asset_manager import AssetManager
 
 class Renderer:
     def __init__(self, width, height, rain_today, wind, cloudy, is_raining, Sunsettime, Sunrisetime, datetime):
@@ -40,17 +41,18 @@ class Renderer:
         else:
             self.screen_color = self.BLUE
 
-        raindropPic = pygame.image.load('assets/rain.png')
+        self.asset_manager = AssetManager()
+
+        raindropPic = self.asset_manager.get_image("rain")
         self.raindropImage = pygame.transform.smoothscale(raindropPic, (10, 15))
 
 
         if not self.night:
             self.sun = Sun(self.sunrise_time, self.sunset_time, datetime,  self.WIDTH, self.HEIGHT)
 
-        self.clouds = []
-        self.clouds = [Cloud(self.WIDTH, self.HEIGHT) for _ in range(self.cloudy)]
+        self.clouds = [Cloud(self.WIDTH, self.HEIGHT, self.asset_manager.get_cloud()) for _ in range(self.cloudy)]
 
-        self.winds = [Wind(self.wind, self.WIDTH, self.HEIGHT) for _ in range(round(self.wind * 1.5))]
+        self.winds = [Wind(self.wind, self.WIDTH, self.HEIGHT, self.asset_manager.file_dictionary["Wind"]) for _ in range(round(self.wind * 1.5))]
 
         self.trees = []
         AmountofTrees = 15
@@ -63,7 +65,7 @@ class Renderer:
             x_pos = random.randrange(zone_start, zone_end)
             y_pos = self.HEIGHT
             scale = scaleOfTrees - random.randrange(0, 200)
-            self.trees.append(Tree(x_pos, y_pos, scale, self.wind))
+            self.trees.append(Tree(x_pos, y_pos, scale, self.wind, self.asset_manager.file_dictionary))
 
         self.raindrops = []
         self.raindrop_effect_particles = []

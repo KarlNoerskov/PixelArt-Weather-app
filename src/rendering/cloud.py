@@ -2,7 +2,7 @@ import pygame
 import random
 
 class Cloud:
-    def __init__(self, WIDTH, HEIGHT):
+    def __init__(self, WIDTH, HEIGHT, Image):
         self.scale = random.randrange(150, 300)
 
         self.x = random.randrange(-WIDTH - self.scale, WIDTH)
@@ -16,10 +16,7 @@ class Cloud:
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
 
-        whatCloud = random.randrange(0,5)
-        clouds = ["CompactPuff.png", "LargeCumulus.png", "LongStratus.png", "Original.png", "TinyPuff.png", "TrailingTail.png"]
-
-        self.image = pygame.transform.smoothscale(pygame.image.load(f'assets/Clouds/{clouds[whatCloud]}') ,(self.scale, self.scale))
+        self.image = pygame.transform.smoothscale(Image ,(self.scale, self.scale))
 
         self.movespeed = random.randrange(1, 2)
 

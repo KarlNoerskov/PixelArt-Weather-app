@@ -3,7 +3,7 @@ import pygame
 import math
 
 class Wind:
-    def __init__(self, Wind, WIDTH, HEIGHT):
+    def __init__(self, Wind, WIDTH, HEIGHT, Image):
         self.scale = random.randrange(10, 60)
 
         self.HEIGHT = HEIGHT
@@ -20,7 +20,7 @@ class Wind:
         self.circle_radius = 0.5
         self.circle_speed = 0.05
 
-        self.image = pygame.transform.smoothscale(pygame.image.load('assets/wind.png') ,(self.scale, self.scale))
+        self.image = pygame.transform.smoothscale(Image ,(self.scale, self.scale))
 
         self.wind = Wind
 

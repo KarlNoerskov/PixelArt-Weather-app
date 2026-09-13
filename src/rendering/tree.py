@@ -1,18 +1,18 @@
 import pygame
 
 class Tree(pygame.sprite.Sprite):
-    def __init__(self, x, y, scale, wind):
+    def __init__(self, x, y, scale, wind, Images):
         super().__init__()
         self.scale = scale
         self.wind = wind 
         self.x = x
         self.y = y - self.scale
         
-        self.original = pygame.transform.smoothscale(pygame.image.load('assets/originalPixelArtTree.png') ,(self.scale, self.scale))
-        self.right = pygame.transform.smoothscale(pygame.image.load('assets/pixelTreeRight.png') ,(self.scale, self.scale))
-        self.hardRight = pygame.transform.smoothscale(pygame.image.load('assets/pixelTreeHardRight.png') ,(self.scale, self.scale))
-        self.left = pygame.transform.smoothscale(pygame.image.load('assets/pixelTreeLeft.png') ,(self.scale, self.scale))
-        self.hardLeft = pygame.transform.smoothscale(pygame.image.load('assets/pixelTreeHardLeft.png') ,(self.scale, self.scale))
+        self.original = pygame.transform.smoothscale(Images["originalPixelArtTree"] ,(self.scale, self.scale))
+        self.right = pygame.transform.smoothscale(Images["pixelTreeRight"] ,(self.scale, self.scale))
+        self.hardRight = pygame.transform.smoothscale(Images["pixelTreeHardRight"] ,(self.scale, self.scale))
+        self.left = pygame.transform.smoothscale(Images["pixelTreeLeft"] ,(self.scale, self.scale))
+        self.hardLeft = pygame.transform.smoothscale(Images["pixelTreeHardLeft"] ,(self.scale, self.scale))
 
 
 
