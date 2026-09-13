@@ -11,7 +11,7 @@ class Sun:
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
         self.horizon = HEIGHT/2
-        self.arc_height = 600
+        self.arc_height = self.horizon
 
         self.time_of_day = Time
 

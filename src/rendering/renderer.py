@@ -11,7 +11,7 @@ from rendering.star import Star
 from rendering.asset_manager import AssetManager
 
 class Renderer:
-    def __init__(self, width, height, rain_today, wind, cloudy, is_raining, Sunsettime, Sunrisetime, datetime):
+    def __init__(self, width, height, rain_today, wind, cloudy, is_raining, Sunrisetime, Sunsettime, datetime):
         self.WIDTH = width
         self.HEIGHT = height
         self.rainToday = rain_today
@@ -81,9 +81,9 @@ class Renderer:
         if not self.night:
             self.sun.update(screen)
 
-
-        for star in self.stars:
-                    star.update(screen)
+        if self.night:
+            for star in self.stars:
+                star.update(screen)
 
 
         if self.is_raining:
@@ -103,9 +103,9 @@ class Renderer:
             particle.update()
             particle.draw(screen)
 
-        if self.night:
-            for cloud in self.clouds:
-                cloud.update(screen)
+
+        for cloud in self.clouds:
+            cloud.update(screen)
 
 
         self.raindrops = [rain for rain in self.raindrops if rain.y < self.HEIGHT]
