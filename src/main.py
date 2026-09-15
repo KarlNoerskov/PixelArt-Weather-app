@@ -15,27 +15,26 @@ clock = pygame.time.Clock()
 
 weather_man = WeatherData()
 current_data, daily_data = weather_man.get_weather_data()
-#time = datetime.datetime.now()
+time = datetime.datetime.now()
 
-#is_raining = current_data['precipitation'] > 0.0
-#rainToday = current_data['precipitation'] 
-#wind = current_data['wind_speed_10m'] / 3.6
-#cloudy = current_data['cloud_cover']
-
-#cloudy = current_data['cloud_cover']
-#sunrise_time = daily_data['sunrise'][0].split('T')[1]
-#sunset_time = daily_data['sunset'][0].split('T')[1]
+is_raining = current_data['precipitation'] > 0.0
+rainToday = current_data['precipitation'] 
+wind = current_data['wind_speed_10m'] / 3.6
+cloudy = current_data['cloud_cover']
+sunrise_time = daily_data['sunrise'][0].split('T')[1]
+sunset_time = daily_data['sunset'][0].split('T')[1]
 
 # Fake data
-is_raining = True
-rainToday = 0 #mm
-wind = 6 #m/s
-cloudy = 30
-sunrise_time = "06:00"
-sunset_time = "20:00"
-time = datetime.datetime(2026, 9, 11, 12, 30)
+#is_raining = True
+#rainToday = 10 #mm
+#wind = 6 #m/s
+#cloudy = 30
+#sunrise_time = "06:00"
+#sunset_time = "20:00"
+#time = datetime.datetime(2026, 9, 11, 12, 30)
+temp = 10
 
-renderer = Renderer(WIDTH, HEIGHT, rainToday, wind, cloudy, is_raining, sunrise_time, sunset_time, time)
+renderer = Renderer(WIDTH, HEIGHT, rainToday, wind, cloudy, is_raining, sunrise_time, sunset_time, time, temp)
 
 while True:
     for event in pygame.event.get():

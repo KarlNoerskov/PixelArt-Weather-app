@@ -8,17 +8,18 @@ from rendering.wind import Wind
 from rendering.cloud import Cloud
 from rendering.sun import Sun
 from rendering.star import Star
+from rendering.house import House
 from rendering.asset_manager import AssetManager
 
 class Renderer:
-    def __init__(self, width, height, rain_today, wind, cloudy, is_raining, Sunrisetime, Sunsettime, datetime):
+    def __init__(self, width, height, rain_today, wind, cloudy, is_raining, Sunrisetime, Sunsettime, datetime, Temp):
         self.WIDTH = width
         self.HEIGHT = height
         self.rainToday = rain_today
         self.wind = wind
         self.cloudy = cloudy
         self.is_raining = is_raining
-
+        self.temp = Temp
         self.sunset_time = Sunsettime
         self.sunrise_time = Sunrisetime
 
@@ -75,6 +76,8 @@ class Renderer:
             self.stars_amount = 30
             self.stars = [Star(random.randrange(0, self.WIDTH), random.randrange(0, self.HEIGHT // 2), self.asset_manager.get_star()) for _ in range(self.stars_amount)]
 
+        self.house = House(self.WIDTH/2, self.HEIGHT, self.asset_manager.get_house(), self.asset_manager.get_smoke(), self.temp, self.night)
+
 
     def update(self, screen):
         screen.fill(self.screen_color)
@@ -93,6 +96,8 @@ class Renderer:
         for tree in self.trees:
             tree.update(screen)
 
+        self.house.update(screen)
+
         for rain in self.raindrops:
             rain.update(self.raindrop_effect_particles, screen)
 
@@ -106,6 +111,8 @@ class Renderer:
 
         for cloud in self.clouds:
             cloud.update(screen)
+
+        
 
 
         self.raindrops = [rain for rain in self.raindrops if rain.y < self.HEIGHT]

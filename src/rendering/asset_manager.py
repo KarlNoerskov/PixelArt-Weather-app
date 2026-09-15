@@ -7,6 +7,11 @@ class AssetManager:
         self.file_dictionary = {}
         self.cloud_dictionary = {}
         self.stars_dictionary = {}
+        self.house_dictionary = {}
+        self.house_smoke_dictionary = {}
+
+        self.fillDict("assets/House", self.house_dictionary)
+        self.fillDict("assets/House/HouseFrames", self.house_smoke_dictionary)
         self.fillDict("assets", self.file_dictionary)
         self.fillDict("assets/Clouds", self.cloud_dictionary)
         self.fillDict("assets/stars", self.stars_dictionary)
@@ -30,3 +35,12 @@ class AssetManager:
 
     def get_star(self):
         return random.choice(list(self.stars_dictionary.values()))
+
+    def get_house(self):
+        return self.house_dictionary
+
+    def get_smoke(self):
+        sorted_keys = sorted(self.house_smoke_dictionary.keys())
+        return [self.house_smoke_dictionary[k] for k in sorted_keys]
+    
+    
